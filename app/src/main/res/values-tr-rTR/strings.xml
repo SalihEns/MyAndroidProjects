@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Salih\'s Android Application</string>
+    <string name="hello_message">Merhaba Dunya</string>
+    <string name="button_message">Ben bir butonum</string>
+</resources>
