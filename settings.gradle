@@ -1,0 +1,2 @@
+rootProject.name = "Salih's Android Application"
+include ':app'
