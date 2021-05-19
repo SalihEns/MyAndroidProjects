@@ -26,8 +26,29 @@
         android:id="@+id/myedittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
+        />
+    <CheckBox android:id="@+id/thecheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abcde"
         />
 
+<!--    <Switch-->
+<!--        android:id="@+id/mySwitch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="I am a switch" />-->
+
+    <ImageView
+        android:id="@+id/myimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Switch" />
 </LinearLayout>

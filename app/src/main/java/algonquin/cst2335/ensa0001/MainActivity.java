@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
         EditText myedit = findViewById(R.id.myedittext);
 
+        mytext.setText("this is a new text");
+        myButton.setText(mytext.getText());
 
+        CheckBox mycb = findViewById(R.id.thecheckbox) ;
+
+//        Switch mySwitch = findViewById(R.id.mySwitch) ;
+
+        ImageView myimg = findViewById(R.id.myimg) ;
     }
 }
