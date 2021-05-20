@@ -2,14 +2,18 @@ package algonquin.cst2335.ensa0001;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,29 +23,55 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView mytext =  findViewById(R.id.textview); //  FIND TEXTVIEW
+        mytext.setText("this is new text");
+
         Button myButton = findViewById(R.id.mybutton); // FIND BUTTON
+        myButton.setText(mytext.getText());
 
 
 
-//        myButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
 
         EditText myedit = findViewById(R.id.myedittext);  // FIND EDITTEXT
-
         String editString = myedit.getText().toString();
 
-       // myButton.setOnClickListener( (View v) -> {  mytext.setText("Your edit text has: " + editString);  }   );
+        CheckBox cb1 = findViewById(R.id.checkBox1);
+        cb1.setText("I am a checkbox");
+
+        Switch switch1 = findViewById(R.id.switch1);
+        switch1.setText("I am a Switch");
+
+        RadioButton option1 = findViewById(R.id.option1);
+        option1.setText("OPTION 1");
+
+
+        ImageView myimg = findViewById(R.id.logo_algonquin);
+
+        ImageButton myImBtn = findViewById(R.id.myImageButton) ;
+
 
         if(myButton != null) {
             myButton.setOnClickListener(vw -> {
+
                 mytext.setText("Your edit text has: " + editString);
+
             });
         }
+
+
+        //-------?????????????--------ASK PROF.. !
+        cb1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
+        switch1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
+        option1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
+
+
+        // TOAST MESSAGE-----------------------------------------------------
+        //https://developer.android.com/guide/topics/ui/notifiers/toasts#java
+        Context context = getApplicationContext();
+        CharSequence text = "Hello This is Salih's App!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
 
     }
 }
