@@ -4,19 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-
-
     <TextView
         android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_message"
          />
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/mybutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
@@ -26,29 +23,11 @@
         android:id="@+id/myedittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
-    <CheckBox android:id="@+id/thecheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="abcde"
+       android:text="@string/editmessage"
+        android:hint="@string/hinttext"
         />
 
-<!--    <Switch-->
-<!--        android:id="@+id/mySwitch"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="I am a switch" />-->
 
-    <ImageView
-        android:id="@+id/myimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Switch" />
+
 </LinearLayout>

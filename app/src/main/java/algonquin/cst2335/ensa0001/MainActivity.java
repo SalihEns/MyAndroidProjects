@@ -3,6 +3,7 @@ package algonquin.cst2335.ensa0001;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,19 +18,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button myButton = findViewById(R.id.button);
+        TextView mytext =  findViewById(R.id.textview); //  FIND TEXTVIEW
+        Button myButton = findViewById(R.id.mybutton); // FIND BUTTON
 
-        TextView mytext =  findViewById(R.id.textview);
 
-        EditText myedit = findViewById(R.id.myedittext);
 
-        mytext.setText("this is a new text");
-        myButton.setText(mytext.getText());
+//        myButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
 
-        CheckBox mycb = findViewById(R.id.thecheckbox) ;
+        EditText myedit = findViewById(R.id.myedittext);  // FIND EDITTEXT
 
-//        Switch mySwitch = findViewById(R.id.mySwitch) ;
+        String editString = myedit.getText().toString();
 
-        ImageView myimg = findViewById(R.id.myimg) ;
+       // myButton.setOnClickListener( (View v) -> {  mytext.setText("Your edit text has: " + editString);  }   );
+
+        if(myButton != null) {
+            myButton.setOnClickListener(vw -> {
+                mytext.setText("Your edit text has: " + editString);
+            });
+        }
+
     }
 }
