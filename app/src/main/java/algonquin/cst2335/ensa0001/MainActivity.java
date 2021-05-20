@@ -23,16 +23,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView mytext =  findViewById(R.id.textview); //  FIND TEXTVIEW
-        mytext.setText("this is new text");
+
 
         Button myButton = findViewById(R.id.mybutton); // FIND BUTTON
-        myButton.setText(mytext.getText());
+        myButton.setText("Button");
 
 
 
 
         EditText myedit = findViewById(R.id.myedittext);  // FIND EDITTEXT
         String editString = myedit.getText().toString();
+        mytext.setText(myedit.getText().toString());
 
         CheckBox cb1 = findViewById(R.id.checkBox1);
         cb1.setText("I am a checkbox");
@@ -52,16 +53,18 @@ public class MainActivity extends AppCompatActivity {
         if(myButton != null) {
             myButton.setOnClickListener(vw -> {
 
-                mytext.setText("Your edit text has: " + editString);
+                mytext.setText("Your edit text has: " +  myedit.getText().toString());
 
             });
         }
-
 
         //-------?????????????--------ASK PROF.. !
         cb1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
         switch1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
         option1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
+
+
+
 
 
         // TOAST MESSAGE-----------------------------------------------------
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-
 
     }
 }

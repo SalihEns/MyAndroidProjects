@@ -59,5 +59,4 @@
         android:src="@drawable/logo_algonquin"
         android:id="@+id/myImageButton"
         />
-
 </LinearLayout>
