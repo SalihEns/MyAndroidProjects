@@ -27,12 +27,8 @@ public class MainActivity extends AppCompatActivity {
         Button myButton = findViewById(R.id.mybutton); // FIND BUTTON
         myButton.setText("Button");
 
-
-
-
         EditText myedit = findViewById(R.id.myedittext);  // FIND EDITTEXT
         String editString = myedit.getText().toString();
-
 
         CheckBox cb1 = findViewById(R.id.checkBox1);
         cb1.setText("I am a checkbox");
@@ -43,17 +39,13 @@ public class MainActivity extends AppCompatActivity {
         RadioButton option1 = findViewById(R.id.option1);
         option1.setText("OPTION 1");
 
-
         ImageView myimg = findViewById(R.id.logo_algonquin);
 
         ImageButton myImBtn = findViewById(R.id.myImageButton) ;
 
-
         if(myButton != null) {
             myButton.setOnClickListener(vw -> {
-
                 mytext.setText("Your edit text has: " +  myedit.getText().toString());
-
             });
         }
 
@@ -61,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
         cb1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
         switch1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
         option1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
-
-
-
-
 
         // TOAST MESSAGE-----------------------------------------------------
         //https://developer.android.com/guide/topics/ui/notifiers/toasts#java
