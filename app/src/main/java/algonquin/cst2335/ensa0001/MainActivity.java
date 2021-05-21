@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
         TextView mytext =  findViewById(R.id.textview); //  FIND TEXTVIEW
 
-
         Button myButton = findViewById(R.id.mybutton); // FIND BUTTON
         myButton.setText("Button");
 
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText myedit = findViewById(R.id.myedittext);  // FIND EDITTEXT
         String editString = myedit.getText().toString();
-        mytext.setText(myedit.getText().toString());
+
 
         CheckBox cb1 = findViewById(R.id.checkBox1);
         cb1.setText("I am a checkbox");
