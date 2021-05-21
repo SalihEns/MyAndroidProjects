@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        //-------?????????????--------ASK PROF.. !
-        cb1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
-        switch1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
-        option1.setOnCheckedChangeListener( (btn, isChecked) -> {   } );
-
         // TOAST MESSAGE-----------------------------------------------------
         //https://developer.android.com/guide/topics/ui/notifiers/toasts#java
         Context context = getApplicationContext();
@@ -61,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        cb1.setOnCheckedChangeListener( (btn, isChecked) -> { toast.show(); } );
+        switch1.setOnCheckedChangeListener( (btn, isChecked) -> {  toast.show(); } );
+        option1.setOnCheckedChangeListener( (btn, isChecked) -> { toast.show();  } );
 
     }
 }
