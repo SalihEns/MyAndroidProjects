@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // CREATING INSTANCES AND FINDING VIEW BY ID'S
         TextView mytext =  findViewById(R.id.textview); //  FIND TEXTVIEW
 
         Button myButton = findViewById(R.id.mybutton); // FIND BUTTON
@@ -43,23 +45,35 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton myImBtn = findViewById(R.id.myImageButton) ;
 
+
+
         if(myButton != null) {
             myButton.setOnClickListener(vw -> {
                 mytext.setText("Your edit text has: " +  myedit.getText().toString());
             });
         }
 
-        // TOAST MESSAGE-----------------------------------------------------
+        // TOAST MESSAGE WHEN APPLICATION OPENED
         //https://developer.android.com/guide/topics/ui/notifiers/toasts#java
         Context context = getApplicationContext();
         CharSequence text = "Hello This is Salih's App!";
+        CharSequence text2 = "";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        cb1.setOnCheckedChangeListener( (btn, isChecked) -> { toast.show(); } );
-        switch1.setOnCheckedChangeListener( (btn, isChecked) -> {  toast.show(); } );
-        option1.setOnCheckedChangeListener( (btn, isChecked) -> { toast.show();  } );
+        //TOAST MESSAGE WHEN USING CHECKBOX, SWITCH OR RADIOBUTTON
+        CharSequence textOnOFF = "Hello This is Salih's App!";
+        Toast toast2 = Toast.makeText(context, text, duration);
+        cb1.setOnCheckedChangeListener( (btn, isChecked) -> { toast2.show(); } );
+        switch1.setOnCheckedChangeListener( (btn, isChecked) -> {  toast2.show(); } );
+        option1.setOnCheckedChangeListener( (btn, isChecked) -> { toast2.show();  } );
 
+        // TOAST MESSAGE FOR IMAGEBUTTON
+        int width = myImBtn.getWidth();
+        int height = myImBtn.getHeight();
+        CharSequence ImgButtonText = "The width = " + width + " and height = " + height;
+        Toast toast3 = Toast.makeText(context, ImgButtonText, duration);
+        myImBtn.setOnClickListener(v ->toast3.show() );
     }
 }
