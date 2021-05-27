@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="my_primary">#673AB7</color>
+<!--    different color different language-->
+    <color name="my_primary">#FF5722</color>
     <color name="my_secondary">#4CAF50</color>
     <color name="my_statusbar">#3F51B5</color>
 
@@ -9,9 +10,8 @@
 
     <color name="my_text">#ED0A0A</color>
 
-<!--    <color name="button1">#4CAF50</color>-->
-<!--    <color name="button2">#A04CAF</color>-->
-<!--    <color name="button3">#FFC107</color>-->
+
+
 
 
 </resources>

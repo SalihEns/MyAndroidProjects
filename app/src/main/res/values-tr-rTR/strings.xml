@@ -3,4 +3,12 @@
     <string name="app_name">Salih\'s Android Application</string>
     <string name="hello_message">Merhaba Dunya</string>
     <string name="button_message">Ben bir butonum</string>
+
+<!--    FLAG-->
+    <string name="spin_message">Cevir</string>
+
+    <string name="buton1">Tush1</string>
+    <string name="button2">Tush2</string>
+    <string name="buton3">Tush3</string>
+
 </resources>
