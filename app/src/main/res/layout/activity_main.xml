@@ -4,48 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:layout_marginTop="27dp"
+    android:layout_marginBottom="27dp"
+    android:layout_marginLeft="48dp"
+    android:layout_marginRight="48dp"
+    >
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/leftButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/buton1"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/middleButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button2" />
+        app:layout_constraintTop_toTopOf="@+id/middleButton"
+
+
+        android:nextFocusLeft="@id/leftButton"
+        android:nextFocusRight="@id/middleButton"
+        android:nextFocusUp="@id/leftButton"
+        android:nextFocusDown="@id/spin_switch"
+
+        />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/middleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/button2"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/rightButton"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        tools:layout_editor_absoluteY="31dp" />
+        app:layout_constraintStart_toEndOf="@+id/leftButton"
+        tools:layout_editor_absoluteY="31dp"
+        />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/rightButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/buton3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="@+id/button2" />
+        app:layout_constraintStart_toEndOf="@+id/middleButton"
+        app:layout_constraintTop_toTopOf="@+id/middleButton"
+
+
+        />
 
     <ImageView
         android:id="@+id/flagview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/spin_switch"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leftButton"
         app:srcCompat="@drawable/flag" />
 
     <Switch
@@ -56,7 +75,10 @@
         android:text="@string/spin_message"
         app:layout_constraintBottom_toBottomOf="@+id/flagview"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/flagview"
         app:layout_constraintTop_toTopOf="@+id/flagview"
-        app:layout_constraintVertical_bias="0.506" />
+        app:layout_constraintVertical_bias="0.506"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

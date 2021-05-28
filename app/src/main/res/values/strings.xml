@@ -11,9 +11,9 @@
     <string name="spin_message">Spin flag</string>
 
 
-    <string name="buton1">Buton1</string>
-    <string name="button2">Buton2</string>
-    <string name="buton3">Button3</string>
+    <string name="buton1">Button</string>
+    <string name="button2">Button</string>
+    <string name="buton3">Button</string>
 
 
 </resources>
