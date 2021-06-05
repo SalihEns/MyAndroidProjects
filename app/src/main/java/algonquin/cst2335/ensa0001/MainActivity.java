@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     final private static String TAG = "MainActivity";
+
+
 
     @Override
     protected void onStart() {
@@ -21,8 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.w(TAG, "In onCreate() - Loading Widgets" );
         Button loginButton = findViewById(R.id.nextPageButton);
+
+
         loginButton.setOnClickListener(  clk -> {
+            EditText inputEditEmail = findViewById(R.id.inputEditEmail);
+            String editMail = inputEditEmail.getText().toString();
             Intent nextPage = new Intent( MainActivity.this, SecondActivity.class);
+
+            nextPage.putExtra("emailAddress",editMail);
             startActivity(nextPage);
 
         } );
