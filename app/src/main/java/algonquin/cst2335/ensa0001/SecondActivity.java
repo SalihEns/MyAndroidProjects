@@ -23,34 +23,6 @@ import java.io.IOException;
 
 public class SecondActivity extends AppCompatActivity {
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        ImageView  profileImage=findViewById(R.id.profileImage);
-
-
-        if (requestCode==5432){
-           if (resultCode==RESULT_OK){
-               Bitmap thumbnail = data.getParcelableExtra("data");
-               profileImage.setImageBitmap(thumbnail);
-               Intent fromNextPage = data;
-               try {
-                   FileOutputStream fOut = null;
-                   //Bitmap thumbnail = data.getParcelableExtra("data");
-                   fOut = openFileOutput( "Picture.png", Context.MODE_PRIVATE);
-                   thumbnail.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                   fOut.flush();
-                   fOut.close();
-               } catch (IOException e) {
-                   e.printStackTrace();
-
-               }
-           }
-        }
-
-
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,28 +34,64 @@ public class SecondActivity extends AppCompatActivity {
         TextView topOfScreen = findViewById(R.id.textView);
         topOfScreen.setText("Welcome "+emailAddress);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Button callButton = findViewById(R.id.callButton);
         callButton.setOnClickListener(  clk -> {
             EditText editTextPhone = findViewById(R.id.editTextPhone);
             String phoneNumber =editTextPhone.getText().toString();
             Intent call = new Intent(Intent.ACTION_DIAL);
-
             call.setData(Uri.parse("tel: " + phoneNumber) );
             startActivity(call);
+            } );
 
-        } );
-        Button changePictureButton = findViewById(R.id.changePictureButton);
-        changePictureButton.setOnClickListener(  click -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult( cameraIntent, 5432);
+            Button changePictureButton = findViewById(R.id.changePictureButton);
+            changePictureButton.setOnClickListener(  click -> {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult( cameraIntent, 5432);
+            } );
+    }
 
-            finish();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImageView  profileImage=findViewById(R.id.profileImage);
+        Bitmap thumbnail = data.getParcelableExtra("data");
 
-        } );
+        if (requestCode == 5432){
+            if (resultCode == RESULT_OK){
+                FileOutputStream fOut = null;
+                profileImage.setImageBitmap(thumbnail);
+                Intent fromNextPage = data;
+                try {
+                    fOut = openFileOutput( "Picture.png", Context.MODE_PRIVATE);
+                    thumbnail.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                    fOut.flush();
+                    fOut.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
 
+                }
+            }
+        }
 
+    }
 
+    @Override
+    public File getFilesDir() {
+        return super.getFilesDir();
+    }
 
+    @Override
+    public FileOutputStream openFileOutput(String name, int mode) throws FileNotFoundException {
+        return super.openFileOutput(name, Context.MODE_PRIVATE);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
