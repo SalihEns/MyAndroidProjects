@@ -50,6 +50,7 @@ public class ChatRoom extends AppCompatActivity {
             adt.notifyItemInserted(messages.size() - 1);
             editText.setText("");
         });
+
         receive.setOnClickListener(click->{
             ChatMessage thisMessage = new ChatMessage(editText.getText().toString(),2,new Date());
             messages.add(thisMessage);
@@ -116,7 +117,7 @@ public class ChatRoom extends AppCompatActivity {
             else {
                 layoutID = R.layout.receive_message;
             }
-            View loadedRow = inflater.inflate(R.layout.sent_message, parent, false);
+            View loadedRow = inflater.inflate(layoutID, parent, false);
             MyrowViews initRow = new MyrowViews(loadedRow);
 
             return initRow;
@@ -140,6 +141,8 @@ public class ChatRoom extends AppCompatActivity {
         public int getItemCount() {
             return messages.size();
         }
+
+
     }
 
 
