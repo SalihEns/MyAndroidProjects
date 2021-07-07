@@ -39,6 +39,8 @@ public class ChatRoom extends AppCompatActivity {
         Button receive = findViewById(R.id.myrecievebtn);
         EditText editText = findViewById(R.id.editTextPerson);
 
+        MyOpenHelper opener = new MyOpenHelper( this );
+
         adt = new MyChatAdapter();
 
         chatList.setAdapter(adt);
