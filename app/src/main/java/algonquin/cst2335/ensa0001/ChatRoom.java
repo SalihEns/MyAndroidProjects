@@ -111,11 +111,15 @@ public class ChatRoom extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
                 builder.setMessage("" + messageText.getText());
                 ChatMessage removeMessage = messages.get(position);
-                builder.setTitle("Question: ").setNegativeButton("No", (dialog, cl) -> {
+                builder.setTitle("Delete ?  ").setNegativeButton("No", (dialog, cl) -> {
                 }).setPositiveButton("Yes", (dialog, cl) -> {
                         messages.remove(position);
                         adt.notifyItemRemoved(position);
+
+                        //db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { removeMessage.getId() });
+
                 })
+
                 .create()
                         .show();
                 Snackbar.make(messageText,""+position,Snackbar.LENGTH_LONG).setAction("",clk ->{
@@ -206,13 +210,10 @@ public class ChatRoom extends AppCompatActivity {
         public String getMessage() {
             return message;
         }
-
         public int getSendORReceive() {
             return sendORReceive;
         }
-
         public String getTimeSent() { return  timeSent ;}
-
 
     }
 
