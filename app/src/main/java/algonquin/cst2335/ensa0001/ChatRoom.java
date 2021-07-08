@@ -92,7 +92,7 @@ public class ChatRoom extends AppCompatActivity {
             String currentDateandTime = sdf.format(new Date());
 
             ChatMessage thisMessage = new ChatMessage(editText.getText().toString(),2,currentDateandTime);
-            messages.add(thisMessage);
+
 
             ContentValues newRow = new ContentValues();
             newRow.put(MyOpenHelper.col_message, thisMessage.getMessage());
