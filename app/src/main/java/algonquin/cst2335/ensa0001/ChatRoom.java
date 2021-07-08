@@ -176,7 +176,6 @@ public class ChatRoom extends AppCompatActivity {
                    thisRowLayout.setPosition(position);
         }
 
-
         @Override
         public int getItemCount() {
             return messages.size();
