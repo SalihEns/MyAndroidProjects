@@ -12,7 +12,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "CHAT";
     public static final String col_message = "theMessage";//declare column name
     public static final String col_send_receive = "SendOrReceive";
-    public static final String col_time_sent = " timeSent";
+    public static final String col_time_sent = "timeSent";
 
     public MyOpenHelper(Context context) {
         super(context, name, null, version);

@@ -183,9 +183,12 @@ public class ChatRoom extends AppCompatActivity {
             thisRowLayout.messageText.setText(messages.get(position).getMessage());
 
                    SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
-                   String currentDate = sdf.format(messages.get(position).getTimeSent());
-                   thisRowLayout.timeText.setText(currentDate);
-                   thisRowLayout.setPosition(position);
+                   //String currentDate = sdf.format(messages.get(position).getTimeSent());
+
+                    String currentDate = "fake";
+
+                    thisRowLayout.timeText.setText(currentDate);
+                    thisRowLayout.setPosition(position);
         }
 
         @Override
