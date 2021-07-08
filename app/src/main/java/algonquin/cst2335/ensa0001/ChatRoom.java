@@ -48,7 +48,7 @@ public class ChatRoom extends AppCompatActivity {
          db = opener.getWritableDatabase();
         Cursor results = db.rawQuery("select * from " + MyOpenHelper.TABLE_NAME + ";",null);
 
-        //results.moveToNext();
+
 
         int _idCol = results.getColumnIndex("_id");
         int messageCol = results.getColumnIndex(MyOpenHelper.col_message);
@@ -62,9 +62,9 @@ public class ChatRoom extends AppCompatActivity {
             int sendOrReceive = results.getInt(sendCol);
             messages.add(new ChatMessage(message, sendOrReceive, time, id));
         }
-        //adt = new MyChatAdapter();
+        adt = new MyChatAdapter();
         chatList.setAdapter(adt);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
 
         chatList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -200,9 +200,7 @@ public class ChatRoom extends AppCompatActivity {
         long id;
         public void setId (long l){id = l;}
         public long getId(){ return id;}
-        public ChatMessage (String s) {
-            message = s;
-        }
+
         public ChatMessage(String message, int sendORReceive, String timeSent){
             this.message = message;
             this.sendORReceive = sendORReceive;
@@ -223,7 +221,6 @@ public class ChatRoom extends AppCompatActivity {
             return sendORReceive;
         }
         public String getTimeSent() { return  timeSent ;}
-
     }
 
 }
