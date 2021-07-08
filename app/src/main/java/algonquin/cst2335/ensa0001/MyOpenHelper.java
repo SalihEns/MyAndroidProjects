@@ -14,9 +14,8 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     public static final String col_send_receive = "SendOrReceive";
     public static final String col_time_sent = " timeSent";
 
-    public MyOpenHelper( Context context ) {
+    public MyOpenHelper(Context context) {
         super(context, name, null, version);
-        //that's all the constructor does
     }
 
     //sql creation statement:
