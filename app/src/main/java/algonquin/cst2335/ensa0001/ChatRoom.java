@@ -39,13 +39,13 @@ public class ChatRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chatlayout);
 
-        RecyclerView chatList = findViewById(R.id.myrecycler);
+         chatList = findViewById(R.id.myrecycler);
         Button send = findViewById(R.id.mysendBtn);
         Button receive = findViewById(R.id.myrecievebtn);
         EditText editText = findViewById(R.id.editTextPerson);
 
         MyOpenHelper opener = new MyOpenHelper( this );
-         db = opener.getWritableDatabase();
+        db = opener.getWritableDatabase();
         Cursor results = db.rawQuery("select * from " + MyOpenHelper.TABLE_NAME + ";",null);
 
 
@@ -64,9 +64,8 @@ public class ChatRoom extends AppCompatActivity {
         }
         adt = new MyChatAdapter();
         chatList.setAdapter(adt);
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
 
-        chatList.setLayoutManager(new LinearLayoutManager(this));
+        chatList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
         send.setOnClickListener(click-> {
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
@@ -80,7 +79,9 @@ public class ChatRoom extends AppCompatActivity {
             newRow.put(MyOpenHelper.col_send_receive, cm.getSendORReceive());
             newRow.put(MyOpenHelper.col_time_sent, cm.getTimeSent());
 
+
             db.insert(MyOpenHelper.TABLE_NAME, MyOpenHelper.col_message, newRow);
+
             messages.add(cm);
             editText.setText("");
             adt.notifyItemInserted(messages.size() - 1);
@@ -92,12 +93,14 @@ public class ChatRoom extends AppCompatActivity {
 
             ChatMessage thisMessage = new ChatMessage(editText.getText().toString(),2,currentDateandTime);
             messages.add(thisMessage);
+
             ContentValues newRow = new ContentValues();
             newRow.put(MyOpenHelper.col_message, thisMessage.getMessage());
             newRow.put(MyOpenHelper.col_send_receive, thisMessage.getSendORReceive());
             newRow.put(MyOpenHelper.col_time_sent, thisMessage.getTimeSent());
 
             db.insert(MyOpenHelper.TABLE_NAME, MyOpenHelper.col_message, newRow);
+
             messages.add(thisMessage);
             adt.notifyItemInserted(messages.size() - 1);
             editText.setText("");
