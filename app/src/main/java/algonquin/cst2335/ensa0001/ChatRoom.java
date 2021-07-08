@@ -30,6 +30,7 @@ public class ChatRoom extends AppCompatActivity {
     RecyclerView chatList;
     ArrayList<ChatMessage> messages = new ArrayList<>();
     MyChatAdapter adt;
+    SQLiteDatabase db;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -43,18 +44,18 @@ public class ChatRoom extends AppCompatActivity {
         EditText editText = findViewById(R.id.editTextPerson);
 
         MyOpenHelper opener = new MyOpenHelper( this );
-        SQLiteDatabase db = opener.getWritableDatabase();
+         db = opener.getWritableDatabase();
         Cursor results = db.rawQuery("select * from " + MyOpenHelper.TABLE_NAME + ";",null);
 
         results.moveToNext();
 
-        int _idcol = results.getColumnIndex("_id");
+        int _idCol = results.getColumnIndex("_id");
         int messageCol = results.getColumnIndex(MyOpenHelper.col_message);
         int sendCol = results.getColumnIndex(MyOpenHelper.col_send_receive);
         int timeCol = results.getColumnIndex(MyOpenHelper.col_time_sent);
 
         results.moveToNext();
-        long id = results.getInt(_idcol);
+        long id = results.getInt(_idCol);
         String message = results.getString(messageCol);
         String time = results.getString(timeCol);
         int sendOrReceive = results.getInt(sendCol);
@@ -69,10 +70,6 @@ public class ChatRoom extends AppCompatActivity {
         send.setOnClickListener(click->{
 
             ChatMessage cm = new ChatMessage(editText.getText().toString(),1,new Date());
-            messages.add(cm);
-            adt.notifyItemInserted(messages.size() - 1);
-            editText.setText("");
-
 
             ContentValues newRow = new ContentValues();
             newRow.put(MyOpenHelper.col_message, cm.getMessage());
@@ -84,8 +81,9 @@ public class ChatRoom extends AppCompatActivity {
             cm.setId(newID );
 
             messages.add(cm);
-            adt.notifyItemInserted(messages.size() - 1);
             editText.setText("");
+            adt.notifyItemInserted(messages.size() - 1);
+
 
         });
 
@@ -116,7 +114,7 @@ public class ChatRoom extends AppCompatActivity {
                         messages.remove(position);
                         adt.notifyItemRemoved(position);
 
-                        //db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { removeMessage.getId() });
+                        db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
 
                 })
 
@@ -189,16 +187,16 @@ public class ChatRoom extends AppCompatActivity {
     private class ChatMessage {
        public String message;
         public  int sendORReceive;
-        public String timeSent;
+        public Date timeSent;
         long id;
         public void setId (long l){id = l;}
         public long getId(){ return id;}
         public ChatMessage(String message, int sendORReceive, Date timeSent){
             this.message = message;
             this.sendORReceive = sendORReceive;
-            this.timeSent = String.valueOf(timeSent);
+            this.timeSent = timeSent;
         }
-        public ChatMessage (String message,int sendORReceive, String timeSent, long id){
+        public ChatMessage (String message,int sendORReceive, Date timeSent, long id){
 
             this.message = message;
             this.sendORReceive = sendORReceive;
@@ -213,7 +211,7 @@ public class ChatRoom extends AppCompatActivity {
         public int getSendORReceive() {
             return sendORReceive;
         }
-        public String getTimeSent() { return  timeSent ;}
+        public Date getTimeSent() { return  timeSent ;}
 
     }
 
