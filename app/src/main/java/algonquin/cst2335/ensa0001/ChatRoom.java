@@ -26,12 +26,15 @@ import java.util.Date;
 import java.util.Locale;
 
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ChatRoom extends AppCompatActivity {
 
     ArrayList<ChatMessage> messages = new ArrayList<>();
     MyChatAdapter adt;
     SQLiteDatabase db;
     RecyclerView chatList;
+    SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
+    String currentDateandTime = sdf.format(new Date());
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -68,8 +71,7 @@ public class ChatRoom extends AppCompatActivity {
         chatList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
         send.setOnClickListener(click-> {
-            SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
-            String currentDateandTime = sdf.format(new Date());
+
 
             ChatMessage cm = new ChatMessage(editText.getText().toString(), 1, currentDateandTime);
 
@@ -133,15 +135,17 @@ public class ChatRoom extends AppCompatActivity {
 
                         Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo",clk ->{
                             messages.add(position,removeMessage);
+
+
+
+
+                            db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
+                                    +removeMessage.getId() +
+                                    "','" + removeMessage.getMessage() +
+                                            "','" + removeMessage.getSendORReceive() +
+                                            "','" + removeMessage.getTimeSent() + "');");
+                             //need to add database.
                             adt.notifyItemRemoved(position);
-
-
-
-//                            db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + "values('" +removeMessage.getId() +
-//                                    "'.'" + removeMessage.getMessage() +
-//                                            "'.'" + removeMessage.getSendORReceive() +
-//                                            "'.'" + removeMessage.getTimeSent() + "');");
-                            // need to add database.
                     }).show();
 
             });
@@ -164,6 +168,7 @@ public class ChatRoom extends AppCompatActivity {
             return messages.get(position).getSendORReceive();
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public MyrowViews onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = getLayoutInflater();
@@ -187,13 +192,10 @@ public class ChatRoom extends AppCompatActivity {
         public void onBindViewHolder(MyrowViews holder, int position) {
             MyrowViews thisRowLayout = (MyrowViews)holder;
             thisRowLayout.messageText.setText(messages.get(position).getMessage());
+           thisRowLayout.timeText.setText(currentDateandTime);
 
-                   SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
-                   //String currentDate = sdf.format(messages.get(position).getTimeSent());
+                   thisRowLayout.timeText.setText(currentDateandTime);
 
-                    String currentDate = "fake";
-
-                    thisRowLayout.timeText.setText(currentDate);
                     thisRowLayout.setPosition(position);
         }
 
