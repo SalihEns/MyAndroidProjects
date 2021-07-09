@@ -34,7 +34,7 @@ public class ChatRoom extends AppCompatActivity {
     SQLiteDatabase db;
     RecyclerView chatList;
     SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
-    String currentDateandTime = sdf.format(new Date());
+    String currentTime = sdf.format(new Date());
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -42,7 +42,7 @@ public class ChatRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chatlayout);
 
-         chatList = findViewById(R.id.myrecycler);
+        chatList = findViewById(R.id.myrecycler);
         Button send = findViewById(R.id.mysendBtn);
         Button receive = findViewById(R.id.myrecievebtn);
         EditText editText = findViewById(R.id.editTextPerson);
@@ -73,7 +73,7 @@ public class ChatRoom extends AppCompatActivity {
         send.setOnClickListener(click-> {
 
 
-            ChatMessage cm = new ChatMessage(editText.getText().toString(), 1, currentDateandTime);
+            ChatMessage cm = new ChatMessage(editText.getText().toString(), 1, currentTime);
 
             ContentValues newRow = new ContentValues();
 
@@ -82,7 +82,9 @@ public class ChatRoom extends AppCompatActivity {
             newRow.put(MyOpenHelper.col_time_sent, cm.getTimeSent());
 
 
-            db.insert(MyOpenHelper.TABLE_NAME, MyOpenHelper.col_message, newRow);
+            long id = db.insert(MyOpenHelper.TABLE_NAME, MyOpenHelper.col_message, newRow);
+
+            cm.setId(id);
 
             messages.add(cm);
             editText.setText("");
@@ -101,8 +103,9 @@ public class ChatRoom extends AppCompatActivity {
             newRow.put(MyOpenHelper.col_send_receive, thisMessage.getSendORReceive());
             newRow.put(MyOpenHelper.col_time_sent, thisMessage.getTimeSent());
 
-            db.insert(MyOpenHelper.TABLE_NAME, MyOpenHelper.col_message, newRow);
+           long id = db.insert(MyOpenHelper.TABLE_NAME, MyOpenHelper.col_message, newRow);
 
+           thisMessage.setId(id);
             messages.add(thisMessage);
             adt.notifyItemInserted(messages.size() - 1);
             editText.setText("");
@@ -121,8 +124,8 @@ public class ChatRoom extends AppCompatActivity {
 
             itemView.setOnClickListener(click -> {
                 //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
+                position = getAdapterPosition();
                 ChatMessage removeMessage = messages.get(position);
                 builder.setMessage("Do you want to delete this message ? \n" + messageText.getText())
                         .setTitle("Question")
@@ -135,9 +138,6 @@ public class ChatRoom extends AppCompatActivity {
 
                         Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo",clk ->{
                             messages.add(position,removeMessage);
-
-
-
 
                             db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
                                     +removeMessage.getId() +
@@ -192,9 +192,9 @@ public class ChatRoom extends AppCompatActivity {
         public void onBindViewHolder(MyrowViews holder, int position) {
             MyrowViews thisRowLayout = (MyrowViews)holder;
             thisRowLayout.messageText.setText(messages.get(position).getMessage());
-           thisRowLayout.timeText.setText(currentDateandTime);
+           thisRowLayout.timeText.setText(currentTime);
 
-                   thisRowLayout.timeText.setText(currentDateandTime);
+                   thisRowLayout.timeText.setText(currentTime);
 
                     thisRowLayout.setPosition(position);
         }
