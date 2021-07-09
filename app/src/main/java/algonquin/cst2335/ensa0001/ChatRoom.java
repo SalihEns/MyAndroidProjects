@@ -126,16 +126,24 @@ public class ChatRoom extends AppCompatActivity {
                         .setTitle("Question")
                         .setNegativeButton("No", (dialog, cl) -> {})
                 .setPositiveButton("Yes", (dialog, cl) -> {
-                        messages.remove(position);
-                        adt.notifyItemRemoved(position);
-
-                        db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
-                        Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo",clk ->{
                             messages.remove(position);
                             adt.notifyItemRemoved(position);
+                       db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
+                        }).create().show();
 
+                        Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo",clk ->{
+                            messages.add(position,removeMessage);
+                            adt.notifyItemRemoved(position);
+
+
+
+//                            db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + "values('" +removeMessage.getId() +
+//                                    "'.'" + removeMessage.getMessage() +
+//                                            "'.'" + removeMessage.getSendORReceive() +
+//                                            "'.'" + removeMessage.getTimeSent() + "');");
+                            // need to add database.
                     }).show();
-                }).create().show();
+
             });
 
             messageText = itemView.findViewById(R.id.message);
