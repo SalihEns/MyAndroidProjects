@@ -112,32 +112,30 @@ public class ChatRoom extends AppCompatActivity {
         TextView messageText;
         TextView timeText;
         int position = -1;
+        @RequiresApi(api = Build.VERSION_CODES.N)
         public MyrowViews(View itemView) {
             super(itemView);
 
 
             itemView.setOnClickListener(click -> {
+                //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
-                builder.setMessage("" + messageText.getText());
                 ChatMessage removeMessage = messages.get(position);
-                builder.setTitle("Delete ?  ").setNegativeButton("No", (dialog, cl) -> {
-                }).setPositiveButton("Yes", (dialog, cl) -> {
+                builder.setMessage("Do you want to delete this message ? \n" + messageText.getText())
+                        .setTitle("Question")
+                        .setNegativeButton("No", (dialog, cl) -> {})
+                .setPositiveButton("Yes", (dialog, cl) -> {
                         messages.remove(position);
                         adt.notifyItemRemoved(position);
 
                         db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
+                        Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo",clk ->{
+                            messages.remove(position);
+                            adt.notifyItemRemoved(position);
 
-                })
-
-                .create()
-                        .show();
-                Snackbar.make(messageText,""+position,Snackbar.LENGTH_LONG).setAction("",clk ->{
-
-                    messages.add(position, removeMessage);
-                    adt.notifyItemInserted(position);
-                });
-
+                    }).show();
+                }).create().show();
             });
 
             messageText = itemView.findViewById(R.id.message);
