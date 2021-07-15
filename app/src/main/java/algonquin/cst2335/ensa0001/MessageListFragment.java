@@ -1,6 +1,5 @@
 package algonquin.cst2335.ensa0001;
 
-import android.app.FragmentManager;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -123,16 +120,24 @@ public class MessageListFragment extends Fragment {
         return chatLayout;
     }
 
-    private class MyrowViews extends RecyclerView.ViewHolder {
+    public void notifyMessageDeleted(ChatMessage chosenMessage, int chosenPosition) {
+
+    }
+
+    private class MyRowViews extends RecyclerView.ViewHolder {
+
         TextView messageText;
         TextView timeText;
         int position = -1;
         @RequiresApi(api = Build.VERSION_CODES.N)
-        public MyrowViews(View itemView) {
+        public MyRowViews(View itemView) {
             super(itemView);
 
 
             itemView.setOnClickListener(click -> {
+                ChatRoom parentActivity = (ChatRoom)getContext() ;
+               // int position = getAbsoluteadapterPosition();
+                parentActivity.userClickedMessage(messages.get(position),position);
                 //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 position = getAdapterPosition();
@@ -146,7 +151,7 @@ public class MessageListFragment extends Fragment {
                             db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
                         }).create().show();
 
-                Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo",clk ->{
+                Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo", clk ->{
                     messages.add(position,removeMessage);
 
                     db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
@@ -170,7 +175,7 @@ public class MessageListFragment extends Fragment {
 
     }
 
-    private class MyChatAdapter extends RecyclerView.Adapter<MyrowViews> {
+    private class MyChatAdapter extends RecyclerView.Adapter<MyRowViews> {
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
@@ -180,7 +185,7 @@ public class MessageListFragment extends Fragment {
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
-        public MyrowViews onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyRowViews onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = getLayoutInflater();
 
             int layoutID;
@@ -191,7 +196,7 @@ public class MessageListFragment extends Fragment {
                 layoutID = R.layout.receive_message;
             }
             View loadedRow = inflater.inflate(layoutID, parent, false);
-            MyrowViews initRow = new MyrowViews(loadedRow);
+            MyRowViews initRow = new MyRowViews(loadedRow);
 
             return initRow;
 
@@ -199,8 +204,8 @@ public class MessageListFragment extends Fragment {
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
-        public void onBindViewHolder(MyrowViews holder, int position) {
-            MyrowViews thisRowLayout = (MyrowViews)holder;
+        public void onBindViewHolder(MyRowViews holder, int position) {
+            MyRowViews thisRowLayout = (MyRowViews)holder;
             thisRowLayout.messageText.setText(messages.get(position).getMessage());
             thisRowLayout.timeText.setText(currentTime);
 
@@ -216,7 +221,7 @@ public class MessageListFragment extends Fragment {
 
     }
 
-    private class ChatMessage {
+     class ChatMessage {
         public String message;
         public  int sendORReceive;
         public String timeSent;
