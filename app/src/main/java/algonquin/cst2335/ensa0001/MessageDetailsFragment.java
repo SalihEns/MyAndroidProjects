@@ -40,7 +40,7 @@ public class MessageDetailsFragment  extends Fragment {
 
         Button closeButton = detailsView.findViewById(R.id.closeButton);
         closeButton.setOnClickListener( closeClicked -> {
-            //getParentFragmentManager().beginTransaction.remove(this).commit();
+            getParentFragmentManager().beginTransaction().remove(this).commit();
         });
 
         Button deleteButton = detailsView.findViewById(R.id.buttonDelete);
@@ -48,11 +48,9 @@ public class MessageDetailsFragment  extends Fragment {
 
             ChatRoom parentActivity = (ChatRoom)getContext();
             parentActivity.notifyMessageDeleted(chosenMessage,chosenPosition);
+            getParentFragmentManager().beginTransaction().remove(this).commit();
 
         });
-
-
-
         return detailsView;
     }
 }

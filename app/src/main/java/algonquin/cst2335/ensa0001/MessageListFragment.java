@@ -34,6 +34,7 @@ public class MessageListFragment extends Fragment {
     //RecyclerView chatList;
     SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a", Locale.getDefault());
     String currentTime = sdf.format(new Date());
+    Button send;
 
 
     @Override
@@ -42,14 +43,12 @@ public class MessageListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.chatlayout);
 
-
-
-
-
         View chatLayout = inflater.inflate(R.layout.chatlayout, container, false);
 
+     //   send = chatLayout.findViewById(R.id.sendView);
+
         RecyclerView chatList = chatLayout.findViewById(R.id.myrecycler);
-        Button send = chatLayout.findViewById(R.id.mysendBtn);
+         send = chatLayout.findViewById(R.id.mysendBtn);
         Button receive = chatLayout.findViewById(R.id.myrecievebtn);
         EditText editText = chatLayout.findViewById(R.id.editTextPerson);
 
@@ -122,38 +121,37 @@ public class MessageListFragment extends Fragment {
 
     public void notifyMessageDeleted(ChatMessage chosenMessage, int chosenPosition) {
 
-        itemView.setOnClickListener(click -> {
+
+
+
                     ChatRoom parentActivity = (ChatRoom)getContext() ;
                     // int position = getAbsoluteadapterPosition();
-                    parentActivity.userClickedMessage(messages.get(chosenPosition),chosenPosition);
+
                     //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                chosenPosition = getAdapterPosition();
-                ChatMessage removeMessage = messages.get(chosenPosition);
-                builder.setMessage("Do you want to delete this message ? \n" + messageText.getText())
-                        .setTitle("Question")
-                        .setNegativeButton("No", (dialog, cl) -> {})
-                        .setPositiveButton("Yes", (dialog, cl) -> {
+
+
+
+                builder.setMessage("Do you want to delete this message ? \n" +chosenMessage.getMessage())
+                        .setTitle("Danger")
+                        .setNegativeButton("Cancel", (dialog, cl) -> {})
+                        .setPositiveButton("Delete", (dialog, cl) -> {
+
+                            Snackbar.make(send,"You deleted message #"+chosenPosition,Snackbar.LENGTH_LONG).setAction("Undo", clk ->{
+                                messages.add(chosenPosition,chosenMessage);
+
+                                db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
+                                        +chosenMessage.getId() +
+                                        "','" + chosenMessage.getMessage() +
+                                        "','" + chosenMessage.getSendORReceive() +
+                                        "','" + chosenMessage.getTimeSent() + "');");
+                                //need to add database.
+                                adt.notifyItemRemoved(chosenPosition);
+                            }).show();
                             messages.remove(chosenPosition);
                             adt.notifyItemRemoved(chosenPosition);
-                            db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
+                            db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(chosenMessage.getId()) });
                         }).create().show();
-
-                Snackbar.make(messageText,"You deleted message #"+chosenPosition,Snackbar.LENGTH_LONG).setAction("Undo", clk ->{
-                    messages.add(chosenPosition,removeMessage);
-
-                    db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
-                            +removeMessage.getId() +
-                            "','" + removeMessage.getMessage() +
-                            "','" + removeMessage.getSendORReceive() +
-                            "','" + removeMessage.getTimeSent() + "');");
-                    //need to add database.
-                    adt.notifyItemRemoved(chosenPosition);
-                }).show();
-
-            });
-
-
 
 
 
@@ -165,15 +163,16 @@ public class MessageListFragment extends Fragment {
         TextView messageText;
         TextView timeText;
         int position = -1;
-        @RequiresApi(api = Build.VERSION_CODES.N)
+
         public MyRowViews(View itemView) {
             super(itemView);
 
 
-//            itemView.setOnClickListener(click -> {
-//                    ChatRoom parentActivity = (ChatRoom)getContext() ;
-//                    // int position = getAbsoluteadapterPosition();
-//                    parentActivity.userClickedMessage(messages.get(position),position);
+            itemView.setOnClickListener(click -> {
+                        ChatRoom parentActivity = (ChatRoom) getContext();
+                        // int position = getAbsoluteadapterPosition();
+                        parentActivity.userClickedMessage(messages.get(position), position);
+                    });
 //                    //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
 //                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 //                position = getAdapterPosition();
