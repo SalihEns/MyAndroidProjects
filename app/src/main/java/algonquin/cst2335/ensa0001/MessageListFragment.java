@@ -122,6 +122,42 @@ public class MessageListFragment extends Fragment {
 
     public void notifyMessageDeleted(ChatMessage chosenMessage, int chosenPosition) {
 
+        itemView.setOnClickListener(click -> {
+                    ChatRoom parentActivity = (ChatRoom)getContext() ;
+                    // int position = getAbsoluteadapterPosition();
+                    parentActivity.userClickedMessage(messages.get(chosenPosition),chosenPosition);
+                    //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                chosenPosition = getAdapterPosition();
+                ChatMessage removeMessage = messages.get(chosenPosition);
+                builder.setMessage("Do you want to delete this message ? \n" + messageText.getText())
+                        .setTitle("Question")
+                        .setNegativeButton("No", (dialog, cl) -> {})
+                        .setPositiveButton("Yes", (dialog, cl) -> {
+                            messages.remove(chosenPosition);
+                            adt.notifyItemRemoved(chosenPosition);
+                            db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
+                        }).create().show();
+
+                Snackbar.make(messageText,"You deleted message #"+chosenPosition,Snackbar.LENGTH_LONG).setAction("Undo", clk ->{
+                    messages.add(chosenPosition,removeMessage);
+
+                    db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
+                            +removeMessage.getId() +
+                            "','" + removeMessage.getMessage() +
+                            "','" + removeMessage.getSendORReceive() +
+                            "','" + removeMessage.getTimeSent() + "');");
+                    //need to add database.
+                    adt.notifyItemRemoved(chosenPosition);
+                }).show();
+
+            });
+
+
+
+
+
+
     }
 
     private class MyRowViews extends RecyclerView.ViewHolder {
@@ -134,36 +170,36 @@ public class MessageListFragment extends Fragment {
             super(itemView);
 
 
-            itemView.setOnClickListener(click -> {
-                ChatRoom parentActivity = (ChatRoom)getContext() ;
-               // int position = getAbsoluteadapterPosition();
-                parentActivity.userClickedMessage(messages.get(position),position);
-                //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                position = getAdapterPosition();
-                ChatMessage removeMessage = messages.get(position);
-                builder.setMessage("Do you want to delete this message ? \n" + messageText.getText())
-                        .setTitle("Question")
-                        .setNegativeButton("No", (dialog, cl) -> {})
-                        .setPositiveButton("Yes", (dialog, cl) -> {
-                            messages.remove(position);
-                            adt.notifyItemRemoved(position);
-                            db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
-                        }).create().show();
-
-                Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo", clk ->{
-                    messages.add(position,removeMessage);
-
-                    db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
-                            +removeMessage.getId() +
-                            "','" + removeMessage.getMessage() +
-                            "','" + removeMessage.getSendORReceive() +
-                            "','" + removeMessage.getTimeSent() + "');");
-                    //need to add database.
-                    adt.notifyItemRemoved(position);
-                }).show();
-
-            });
+//            itemView.setOnClickListener(click -> {
+//                    ChatRoom parentActivity = (ChatRoom)getContext() ;
+//                    // int position = getAbsoluteadapterPosition();
+//                    parentActivity.userClickedMessage(messages.get(position),position);
+//                    //MyrowViews newRow = adt.onCreateViewHolder(null,adt.getItemViewType(position));
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                position = getAdapterPosition();
+//                ChatMessage removeMessage = messages.get(position);
+//                builder.setMessage("Do you want to delete this message ? \n" + messageText.getText())
+//                        .setTitle("Question")
+//                        .setNegativeButton("No", (dialog, cl) -> {})
+//                        .setPositiveButton("Yes", (dialog, cl) -> {
+//                            messages.remove(position);
+//                            adt.notifyItemRemoved(position);
+//                            db.delete(MyOpenHelper.TABLE_NAME,"_id=?", new String[] { Long.toString(removeMessage.getId()) });
+//                        }).create().show();
+//
+//                Snackbar.make(messageText,"You deleted message #"+position,Snackbar.LENGTH_LONG).setAction("Undo", clk ->{
+//                    messages.add(position,removeMessage);
+//
+//                    db.execSQL("Insert into " + MyOpenHelper.TABLE_NAME + " values('"
+//                            +removeMessage.getId() +
+//                            "','" + removeMessage.getMessage() +
+//                            "','" + removeMessage.getSendORReceive() +
+//                            "','" + removeMessage.getTimeSent() + "');");
+//                    //need to add database.
+//                    adt.notifyItemRemoved(position);
+//                }).show();
+//
+//            });
 
             messageText = itemView.findViewById(R.id.message);
             timeText = itemView.findViewById(R.id.time);
