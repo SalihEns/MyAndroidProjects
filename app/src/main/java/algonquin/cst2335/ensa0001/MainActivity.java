@@ -3,124 +3,64 @@ package algonquin.cst2335.ensa0001;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * @author Salih
- * @version 1.0
- *
- * This class has three methods.
- * when user type his or her password and hit the button
- * he or she will be notified whether the password meets the
- * requirement or not. These behaviour will be handled by onCrete,
- * checkPasswordComplexity, isSpecCharecter
- */
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+
 public class MainActivity extends AppCompatActivity {
-    /** This hold the text at the centre of the screen */
-    private TextView tv = null;
 
-    /** this holds  the edited text at the bottom of the textview */
-    private EditText et = null;
+    private String stringUrl;
 
-    /** This holds the button at the bottom of the screen  */
-    private Button btn = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.textView);
-        et = findViewById(R.id.passCheck);
-        btn = findViewById(R.id.loginbtn);
+        Button forecastBtn = findViewById(R.id.forecastButton);
+        EditText cityText = findViewById(R.id.cityTextField);
 
-        btn.setOnClickListener(clk -> {
-            String password = et.getText().toString();
-            checkPasswordComplexity(password);
+//        forecastBtn.setOnClickListener(clk ->  {
+//
+//        });
 
-            if (checkPasswordComplexity(password)) {
-                tv.setText("Your password meets the requirements");
-            } else
-                tv.setText("You shall not pass");
-        });
-    }
 
-    /**
-     * This function checks if the string value has an upper case letter,
-     * a lower case letter, a number, and a special symbol (#$%^&*!@?).
-     * If it is missing any of these 4 requirements, then show a Toast message
-     * saying which requirement is missing. "Your password does not include an upper
-     * case letter"
-     *
-     * @param pw String object that we are checking
-     * @return true
-     */
-    boolean checkPasswordComplexity(String pw) {
-        Context cont = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        boolean foundUpperCase, foundLowerCase, foundNumber, foundSpecial;
-        foundUpperCase = foundLowerCase = foundNumber = foundSpecial = false;
+        Executor newThread = Executors.newSingleThreadExecutor();
 
-        for (int i = 0; i < pw.length(); i++) {
-            char password = pw.charAt(i);
-            if (Character.isUpperCase(password)) {
-                foundUpperCase = true;
-            } else if (Character.isLowerCase(password)) {
-                foundLowerCase = true;
-            } else if (Character.isDigit(password)) {
-                foundNumber = true;
-            } else if (isSpecCharecter(password)) {
-                foundSpecial = true;
+        newThread.execute(() ->{
+            try {
+                String cityName = cityText.getText().toString();
+
+                stringUrl = "https://api.openweathermap.org/data/2.5/weather?q"
+                        + URLEncoder.encode(cityName,"UTF-8")
+                        +"&appid=7e943c97096a9784391a981c4d878b22&Units=Metric";
+
+                URL url = new URL(stringUrl);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             }
-        }
-        if (!foundUpperCase) {
-            Toast.makeText(cont, "Need upper case", duration)
-                    .show();
-            return false;
-        } else if (!foundLowerCase) {
-            Toast.makeText(cont, "need Lower case", duration)
-                    .show();
-            return false;
-        } else if (!foundNumber) {
-            Toast.makeText(cont, "need number", duration)
-                    .show();
-            return false;
-        } else if (!foundSpecial) {
-            Toast.makeText(cont, "need Special case", duration)
-                    .show();
-            return false;
-        }
-        return true; //only get here if they're all true
+
+
+
+            catch (IOException ioe){
+                Log.e("Connection error:", ioe.getMessage());
+            }
+        });
 
     }
 
-    /**
-     * This function check if the user used
-     * special character or not. Depending on the what they typed
-     * if the user enter a special character then it will return
-     * true boolean value. Otherwise it returns false.
-     *
-     * @param password
-     * @return a boolean value
-     */
-
-    boolean isSpecCharecter(char password) {
-        switch (password) {
-            case '!':
-            case '@':
-            case '#':
-            case '$':
-            case '%':
-            case '^':
-            case '&':
-            case '*':
-                return true;
-            default:
-                return false;
-        }
-    }
 }
