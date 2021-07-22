@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         Button forecastBtn = findViewById(R.id.forecastButton);
         EditText cityText = findViewById(R.id.cityTextField);
 
-//        forecastBtn.setOnClickListener(clk ->  {
-//
-//        });
+
+        forecastBtn.setOnClickListener(clk ->{
+        });
 
 
         Executor newThread = Executors.newSingleThreadExecutor();
