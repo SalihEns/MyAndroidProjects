@@ -3,6 +3,7 @@ package algonquin.cst2335.ensa0001;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -47,10 +48,11 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String stringUrl;
-    Bitmap image = null;
-    EditText cityText;
-    Button forecastBtn;
+     String stringUrl;
+     Bitmap image = null;
+     EditText cityText;
+     Button forecastBtn;
+
     String description = null;
     String iconName = null;
     String current = null;
@@ -59,15 +61,10 @@ public class MainActivity extends AppCompatActivity {
     String humidity = null;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         forecastBtn = findViewById(R.id.forecastButton);
         cityText = findViewById(R.id.cityTextField);
@@ -85,12 +82,9 @@ public class MainActivity extends AppCompatActivity {
             Executor newThread = Executors.newSingleThreadExecutor();
             newThread.execute(() ->{
                 try {
-
-
-
                     stringUrl = "https://api.openweathermap.org/data/2.5/weather?q="
-                            + cityName
-                            +"&appid=7e943c97096a9784391a981c4d878b22&mode=xml";
+                            + URLEncoder.encode(cityName,"UTF-8")
+                            +"&appid=7e943c97096a9784391a981c4d878b22&units=metric&mode=xml";
 
                     URL url = new URL(stringUrl);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -102,10 +96,8 @@ public class MainActivity extends AppCompatActivity {
                     xpp.setInput(in,"UTF-8");
 
 
-
                         while (xpp.next() != XmlPullParser.END_DOCUMENT)
                         {
-
                             switch (xpp.getEventType())
                             {
                                 case XmlPullParser.START_TAG:
@@ -172,24 +164,21 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-
-
-
                     runOnUiThread(( ) ->{
                         TextView tv = findViewById(R.id.temp);
                         tv.setText("the current temperature is " + current);
                         tv.setVisibility(View.VISIBLE);
 
                         TextView tvmin = findViewById(R.id.min);
-                        tvmin.setText("the current min temperature is " + min);
+                        tvmin.setText("the  min temperature is " + min);
                         tvmin.setVisibility(View.VISIBLE);
 
                         TextView tvmax = findViewById(R.id.max);
-                        tvmax.setText("the current max temperature is " + max);
+                        tvmax.setText("the  max temperature is " + max);
                         tvmax.setVisibility(View.VISIBLE);
 
                         TextView hum = findViewById(R.id.humidity);
-                        hum.setText("the current humidity  is " + humidity + "%");
+                        hum.setText("the  humidity  is " + humidity + "%");
                         hum.setVisibility(View.VISIBLE);
 
                         TextView descr = findViewById(R.id.description);
@@ -202,9 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
                         dialog.hide();
                     });
-
-
-
 
                 }
                 catch (IOException |  XmlPullParserException ioe){
