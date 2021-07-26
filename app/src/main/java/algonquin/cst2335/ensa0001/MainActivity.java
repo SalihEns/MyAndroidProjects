@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ import java.util.stream.Collectors;
 public class MainActivity extends AppCompatActivity {
 
     private String stringUrl;
-    Bitmap image = null;
+    Bitmap image ;
     EditText cityText;
     Button forecastBtn;
 
@@ -53,15 +55,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         forecastBtn = findViewById(R.id.forecastButton);
         cityText = findViewById(R.id.cityTextField);
 
         forecastBtn.setOnClickListener(clk ->{
 
+            String cityName = cityText.getText().toString();
+
+            AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Getting Forecast")
+                    .setMessage("Loading wait please")
+                    .setView(new ProgressBar(MainActivity.this))
+                    .show();
+
             Executor newThread = Executors.newSingleThreadExecutor();
             newThread.execute(() ->{
                 try {
-                    String cityName = cityText.getText().toString();
+
 
                     stringUrl = "https://api.openweathermap.org/data/2.5/weather?q="
                             + URLEncoder.encode(cityName,"UTF-8")
@@ -128,8 +140,9 @@ public class MainActivity extends AppCompatActivity {
                         ImageView iv = findViewById(R.id.icon);
                         iv.setImageBitmap(image);
                         iv.setVisibility(View.VISIBLE);
-                    });
 
+                        dialog.hide();
+                    });
 
                 }
                 catch (IOException | JSONException ioe){
