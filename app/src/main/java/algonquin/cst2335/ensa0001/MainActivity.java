@@ -3,6 +3,7 @@ package algonquin.cst2335.ensa0001;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String cityName = cityText.getText().toString();
 
-                    stringUrl = "https://api.openweathermap.org/data/2.5/weather?q"
+                    stringUrl = "https://api.openweathermap.org/data/2.5/weather?q="
                             + URLEncoder.encode(cityName,"UTF-8")
                             +"&appid=7e943c97096a9784391a981c4d878b22&units=metric";
 
@@ -88,15 +89,19 @@ public class MainActivity extends AppCompatActivity {
                     double max = mainObject.getDouble("temp_max");
                     int humidity = mainObject.getInt("humidity");
 
-                    URL imgUrl = new URL("https://openweathermap.org/img/w/" + iconName + ".png");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.connect();
-                    int responseCode = connection.getResponseCode();
-                    if (responseCode == 200) {
-                        image = BitmapFactory.decodeStream(connection.getInputStream());
-
-    //                    ImageView iv = findViewById(R.id.icon);
-    //                    iv.setImageBitmap(image);
+                    File file = new File(getFilesDir()+ "/"+iconName+".png");
+                    if (file.exists()){
+                        image = BitmapFactory.decodeFile(getFilesDir()+"/"+iconName+".png");
+                    }
+                    else{
+                        URL imgUrl = new URL("https://openweathermap.org/img/w/" + iconName + ".png");
+                        HttpURLConnection connection = (HttpURLConnection) imgUrl.openConnection();
+                        connection.connect();
+                        int responseCode = connection.getResponseCode();
+                        if (responseCode == 200) {
+                            image = BitmapFactory.decodeStream(connection.getInputStream());
+                            image.compress(Bitmap.CompressFormat.PNG,100,openFileOutput(iconName+" png", Activity.MODE_PRIVATE));
+                        }
                     }
 
                     runOnUiThread(( ) ->{
@@ -125,24 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         iv.setVisibility(View.VISIBLE);
                     });
 
-    //                Bitmap image = null;
-    //                File file = new File(getFilesDir(),iconName+".png");
-    //                if (file.exists()){
-    //                    image = BitmapFactory.decodeFile(getFilesDir()+"/"+iconName+".png");
-    //                }
-    //                else {
-    //
-    //                }
-    //                FileOutputStream fOut = null;
-    //                try {
-    //                    fOut = openFileOutput( iconName + ".png", Context.MODE_PRIVATE);
-    //                    image.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-    //                    fOut.flush();
-    //                    fOut.close();
-    //                } catch (FileNotFoundException e) {
-    //                    e.printStackTrace();
-    //
-    //                }
+
                 }
                 catch (IOException | JSONException ioe){
                     Log.e("Connection error:", ioe.getMessage());

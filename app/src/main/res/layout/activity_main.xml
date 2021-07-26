@@ -12,7 +12,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Type in the name of a city:"
+        android:hint="Type in the name of a city:"
         />
 
     <EditText
@@ -60,7 +60,7 @@
     <ImageView
         android:id="@+id/icon"
         android:layout_width="match_parent"
-        android:layout_height="61dp"
+        android:layout_height="200dp"
         android:visibility="invisible"/>
 
     <TextView
