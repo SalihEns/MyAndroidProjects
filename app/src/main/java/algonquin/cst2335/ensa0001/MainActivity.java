@@ -1,52 +1,37 @@
 package algonquin.cst2335.ensa0001;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,19 +41,48 @@ public class MainActivity extends AppCompatActivity {
      EditText cityText;
      Button forecastBtn;
 
-    String description = null;
-    String iconName = null;
-    String current = null;
-    String min = null;
-    String max = null;
-    String humidity = null;
+    String description ;
+    String iconName ;
+    String current ;
+    String min ;
+    String max ;
+    String humidity ;
+
+
+
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+    public boolean onOptionsItemSelected( MenuItem item) {
+        TextView currentTemp = findViewById(R.id.currentTemp);
+        TextView maxTemp = findViewById(R.id.maxTemp);
+        TextView minTemp = findViewById(R.id.minTemp);
+        TextView humid = findViewById(R.id.humidity);
+        TextView desc = findViewById(R.id.description);
+        ImageView ic = findViewById(R.id.icon);
+        TextView cityField = findViewById(R.id.cityField);
 
+
+        switch (item.getItemId())
+        {
+            case R.id.hide_views:
+                currentTemp.setVisibility(View.INVISIBLE);
+                maxTemp.setVisibility(View.INVISIBLE);
+                minTemp.setVisibility(View.INVISIBLE);
+                humid.setVisibility(View.INVISIBLE);
+                desc.setVisibility(View.INVISIBLE);
+                ic.setVisibility(View.INVISIBLE);
+                cityField.setText("");
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu m) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, m);
 
         return true;
     }
@@ -180,15 +194,15 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     runOnUiThread(( ) ->{
-                        TextView tv = findViewById(R.id.temp);
+                        TextView tv = findViewById(R.id.currentTemp);
                         tv.setText("the current temperature is " + current);
                         tv.setVisibility(View.VISIBLE);
 
-                        TextView tvmin = findViewById(R.id.min);
+                        TextView tvmin = findViewById(R.id.minTemp);
                         tvmin.setText("the  min temperature is " + min);
                         tvmin.setVisibility(View.VISIBLE);
 
-                        TextView tvmax = findViewById(R.id.max);
+                        TextView tvmax = findViewById(R.id.maxTemp);
                         tvmax.setText("the  max temperature is " + max);
                         tvmax.setVisibility(View.VISIBLE);
 

@@ -8,16 +8,17 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/cityField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/cityField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Type in the name of a city:"
@@ -35,42 +36,42 @@
         app:layout_constraintBottom_toTopOf="@+id/forecastButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/cityField" />
 
     <Button
         android:id="@+id/forecastButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="GET FORECAST"
-        app:layout_constraintBottom_toTopOf="@+id/temp"
+        app:layout_constraintBottom_toTopOf="@+id/currentTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cityTextField" />
 
     <TextView
-        android:id="@+id/temp"
+        android:id="@+id/currentTemp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Temp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/max"
+        app:layout_constraintBottom_toTopOf="@+id/maxTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forecastButton" />
 
     <TextView
-        android:id="@+id/max"
+        android:id="@+id/maxTemp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Max "
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/min"
+        app:layout_constraintBottom_toTopOf="@+id/minTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temp" />
+        app:layout_constraintTop_toBottomOf="@+id/currentTemp" />
 
     <TextView
-        android:id="@+id/min"
+        android:id="@+id/minTemp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Min"
@@ -78,7 +79,7 @@
         app:layout_constraintBottom_toTopOf="@+id/humidity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/max" />
+        app:layout_constraintTop_toBottomOf="@+id/maxTemp" />
 
     <TextView
         android:id="@+id/humidity"
@@ -89,7 +90,7 @@
         app:layout_constraintBottom_toTopOf="@+id/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/min" />
+        app:layout_constraintTop_toBottomOf="@+id/minTemp" />
 
     <ImageView
         android:id="@+id/icon"

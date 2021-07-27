@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    @android:drawable/btn_dialog
+
+    <item
+        android:id="@+id/hide_views"
+        android:icon="@drawable/clear"
+        android:title="Clear weather"
+        app:showAsAction="always" />
+
 
 </menu>
