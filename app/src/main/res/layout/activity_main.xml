@@ -19,110 +19,74 @@
     android:layout_height="match_parent"
    >
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    >
-<TextView
-    android:id="@+id/cityField"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:text="Type in the name of a city:"
-    app:layout_constraintBottom_toTopOf="@+id/cityTextField"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-     />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-<EditText
-    android:id="@+id/cityTextField"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:hint="Type city name here"
-    android:inputType="textPersonName"
-    app:layout_constraintBottom_toTopOf="@+id/forecastButton"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/cityField" />
+        <TextView
+            android:id="@+id/cityField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type in the name of a city:" />
 
-<Button
-    android:id="@+id/forecastButton"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:text="GET FORECAST"
-    app:layout_constraintBottom_toTopOf="@+id/currentTemp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/cityTextField" />
+        <EditText
+            android:id="@+id/cityTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type city name here"
+            android:inputType="textPersonName" />
 
-<TextView
-    android:id="@+id/currentTemp"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:text="Temp"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toTopOf="@+id/maxTemp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/forecastButton" />
+        <Button
+            android:id="@+id/forecastButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GET FORECAST" />
 
-<TextView
-    android:id="@+id/maxTemp"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:text="Max "
-    android:visibility="invisible"
-    app:layout_constraintBottom_toTopOf="@+id/minTemp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/currentTemp" />
+        <TextView
+            android:id="@+id/currentTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Temp"
+            android:visibility="invisible" />
 
-<TextView
-    android:id="@+id/minTemp"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:text="Min"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toTopOf="@+id/humidity"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/maxTemp" />
+        <TextView
+            android:id="@+id/maxTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Max "
+            android:visibility="invisible" />
 
-<TextView
-    android:id="@+id/humidity"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:text="Humidity"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toTopOf="@+id/icon"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/minTemp" />
+        <TextView
+            android:id="@+id/minTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Min"
+            android:visibility="invisible" />
 
-<ImageView
-    android:id="@+id/icon"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toTopOf="@+id/description"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/humidity" />
+        <TextView
+            android:id="@+id/humidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            android:visibility="invisible" />
 
-<TextView
-    android:id="@+id/description"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginBottom="291dp"
-    android:text="Description"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/icon" />
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_marginBottom="291dp"
+            android:text="Description"
+            android:visibility="invisible" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 <com.google.android.material.navigation.NavigationView
     android:layout_width="wrap_content"
