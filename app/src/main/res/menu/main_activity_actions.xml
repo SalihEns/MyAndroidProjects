@@ -10,6 +10,16 @@
         android:icon="@drawable/clear"
         android:title="Clear weather"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/id_increase"
+        android:icon="@drawable/increase"
+        android:title="Increase Font Size"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/id_decrease"
+        android:icon="@drawable/decrease"
+        android:title="Decrease Font Size"
+        app:showAsAction="always" />
 
 
 </menu>

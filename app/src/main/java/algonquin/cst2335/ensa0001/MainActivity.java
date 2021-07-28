@@ -1,14 +1,19 @@
 package algonquin.cst2335.ensa0001;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.google.android.material.navigation.NavigationView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -47,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
     String min ;
     String max ;
     String humidity ;
-
-
-
+    float oldSize = 14;
 
 
     @Override
@@ -74,6 +78,30 @@ public class MainActivity extends AppCompatActivity {
                 ic.setVisibility(View.INVISIBLE);
                 cityField.setText("");
                 break;
+
+            case R.id.id_increase:
+                oldSize++;
+                currentTemp.setTextSize(oldSize);
+                minTemp.setTextSize(oldSize);
+                maxTemp.setTextSize(oldSize);
+                humid.setTextSize(oldSize);
+                desc.setTextSize(oldSize);
+                cityField.setTextSize(oldSize);
+                break;
+
+            case R.id.id_decrease:
+                oldSize = Float.max(oldSize-1,5);
+                currentTemp.setTextSize(oldSize);
+                minTemp.setTextSize(oldSize);
+                maxTemp.setTextSize(oldSize);
+                humid.setTextSize(oldSize);
+                desc.setTextSize(oldSize);
+                cityField.setTextSize(oldSize);
+                break;
+
+            case 5:
+                String cityName = item.getTitle().toString();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -95,12 +123,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolbar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.popout_menu);
+        navigationView.setNavigationItemSelectedListener( (item)-> {
+
+            onOptionsItemSelected(item);
+            drawer.closeDrawer(GravityCompat.START);
+
+            return false;
+        });
+
+
         forecastBtn = findViewById(R.id.forecastButton);
         cityText = findViewById(R.id.cityTextField);
 
         forecastBtn.setOnClickListener(clk ->{
 
             String cityName = cityText.getText().toString();
+
+//            runForecast(cityName);
+//            forecastBtn.setOnClickListener(click -> {
+//                String cityName = cityField.getText().toString();
+//                myToolbar.getMenu().add(1,5,10,cityName);
+//            });
+
+
 
             AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                     .setTitle("Getting Forecast")
