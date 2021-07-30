@@ -89,16 +89,16 @@
     </LinearLayout>
 
 <com.google.android.material.navigation.NavigationView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:id="@+id/popout_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/popout_menu"
 
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:headerLayout="@layout/popout_header"
-    app:menu="@menu/main_activity_actions"
-    />
-</androidx.drawerlayout.widget.DrawerLayout>
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/popout_header"
+            app:menu="@menu/main_activity_actions"
+            />
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>
 

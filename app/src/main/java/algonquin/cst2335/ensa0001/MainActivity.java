@@ -142,15 +142,17 @@ public class MainActivity extends AppCompatActivity {
         forecastBtn = findViewById(R.id.forecastButton);
         cityText = findViewById(R.id.cityTextField);
 
-        forecastBtn.setOnClickListener(clk ->{
-
-            String cityName = cityText.getText().toString();
-
-//            runForecast(cityName);
+//                    runForecast(cityName);
 //            forecastBtn.setOnClickListener(click -> {
 //                String cityName = cityField.getText().toString();
 //                myToolbar.getMenu().add(1,5,10,cityName);
 //            });
+
+        forecastBtn.setOnClickListener(clk ->{
+
+            String cityName = cityText.getText().toString();
+
+
 
 
 
